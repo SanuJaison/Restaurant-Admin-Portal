@@ -1,4 +1,17 @@
-let foodItems = JSON.parse(localStorage.getItem("foods")) || [];
+const currentUser =
+    JSON.parse(localStorage.getItem("smartBitesUser"));
+
+if (!currentUser) {
+
+    window.location.href = "login.html";
+
+}
+
+const foodKey =
+    `foods_${currentUser.email}`;
+
+let foodItems =
+    JSON.parse(localStorage.getItem(foodKey)) || [];
 
 let editIndex = null;
 
@@ -93,7 +106,7 @@ foodForm.addEventListener("submit", (e) => {
     }
 
 
-    localStorage.setItem("foods", JSON.stringify(foodItems));
+    localStorage.setItem(foodKey, JSON.stringify(foodItems));
 
     displayFoods();
     updateCounts();
@@ -287,10 +300,7 @@ function deleteFood(index) {
 
 
 
-    localStorage.setItem(
-        "foods",
-        JSON.stringify(foodItems)
-    );
+    localStorage.setItem(foodKey, JSON.stringify(foodItems));
 
 
 

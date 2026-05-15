@@ -10,143 +10,201 @@
     />
 
     <script src="https://cdn.tailwindcss.com"></script>
-    
 
     <title>SmartBites | Restaurant Admin Portal</title>
   </head>
 
-  <body class="bg-gray-100 min-h-screen">
-    <nav
-      class="bg-white shadow-md px-6 py-4 flex justify-between sticky top-0 z-50"
-    >
-      <div
-        class="text-orange-500 text-3xl font-semibold flex gap-2 items-center"
-      >
-        <i class="fa-solid fa-bowl-food"></i>
-        <p>SmartBites</p>
-      </div>
-      <div class="flex gap-2 items-center">
-        <button id="addBtn"
-          class="text-white bg-orange-500 rounded-full p-4 font-semibold hover:bg-orange-600 duration-200"
-        >
-          <i class="fa-solid fa-plus"></i> Add New Item
-        </button>
-      </div>
-    </nav>
-    <!-- data cards -->
-    <div class="grid grid-cols-3 gap-6 p-6">
-      <div class="bg-white p-6 rounded-2xl shadow-md flex justify-between">
-        <div>
-          <h2 class="text-gray-500">Total Items</h2>
+  <body class="bg-gray-100 min-h-screen flex">
+    <!-- SIDEBAR -->
+    <aside class="w-[280px] bg-white shadow-lg flex flex-col justify-between">
+      <div>
+        <!-- Logo -->
+        <div class="p-6 border-b">
+          <div class="flex items-center gap-3">
+            <div class="text-orange-500 text-3xl">
+              <i class="fa-solid fa-bowl-food"></i>
+            </div>
 
-          <p id="totalItems" class="text-3xl font-bold mt-2 text-orange-500">0</p>
+            <div>
+              <p class="text-2xl font-bold text-orange-500">SmartBites</p>
+              <p class="text-sm text-gray-500">Admin Portal</p>
+            </div>
+          </div>
         </div>
-        <div
-          class="bg-[#fff7ed] w-20 h-20 rounded-2xl flex items-center justify-center"
-        >
-          <i class="fa-solid fa-layer-group text-orange-500 text-3xl"></i>
+
+        <!-- Restaurant Profile -->
+        <div class="p-6 border-b">
+          <div class="flex flex-col items-center gap-3">
+            <img
+              id="restaurantLogo"
+              src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              class="w-24 h-24 rounded-full object-cover border-4 border-orange-100"
+            />
+
+            <div class="text-center">
+              <p id="restaurantName" class="text-xl font-bold">
+                Restaurant Name
+              </p>
+
+              <p class="text-gray-500 text-sm">Restaurant Owner</p>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="bg-white p-6 rounded-2xl shadow-md flex justify-between">
-        <div>
-          <h2 class="text-gray-500">Available</h2>
+        <!-- MENU -->
+        <div class="p-4 space-y-2">
+          <button
+            onclick="showSection('dashboardSection')"
+            class="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-orange-100 text-orange-600 font-semibold"
+          >
+            <i class="fa-solid fa-table-columns"></i>
+            Dashboard
+          </button>
 
-          <p id="availableItems" class="text-3xl font-bold mt-2 text-green-600">0</p>
-        </div>
-        <div
-          class="bg-green-100 w-20 h-20 rounded-2xl flex items-center justify-center"
-        >
-          <i class="fa-solid fa-circle-check text-green-600 text-3xl"></i>
-        </div>
-      </div>
+          <button
+            onclick="showSection('ordersSection')"
+            class="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100"
+          >
+            <i class="fa-solid fa-bag-shopping"></i>
+            Orders
+          </button>
 
-      <div class="bg-white p-6 rounded-2xl shadow-md flex justify-between">
-        <div>
-          <h2 class="text-gray-500">Out Of Stock</h2>
+          <button
+            onclick="showSection('tablesSection')"
+            class="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100"
+          >
+            <i class="fa-solid fa-chair"></i>
+            Tables
+          </button>
 
-          <p id="outStockItems" class="text-3xl font-bold mt-2 text-red-600">0</p>
-        </div>
-        <div
-          class="bg-red-100 w-20 h-20 rounded-2xl flex items-center justify-center"
-        >
-          <i class="fa-solid fa-circle-xmark text-red-600 text-3xl"></i>
-        </div>
-      </div>
-    </div>
-
-    <!-- searchbar and filter -->
-    <div class="flex justify-between px-5 gap-5">
-      <div
-        class="text-lg flex items-center bg-white px-4 py-2 rounded-lg shadow-md w-full focus-within:ring-2 focus-within:ring-orange-400"
-      >
-        <i class="fa-solid fa-magnifying-glass text-gray-500"></i>
-
-        <input
-        id="searchBar"
-          type="search"
-          placeholder="Search food items..."
-          class="ml-3 w-full outline-none"
-        />
-      </div>
-      <select id="filterBox"
-        class="rounded-lg p-3 text-lg outline-none focus:ring-2 focus:ring-orange-400"
-      >
-        <option>All Categories</option>
-        <option>Main Course</option>
-        <option>Starters</option>
-        <option>Deserts</option>
-        <option>Beverages</option>
-        <option>Fast Food</option>
-      </select>
-    </div>
-
-    <!-- food cards -->
-    <div id="cardContainer" class="grid grid-cols-4 gap-6 m-6">
-      
-    </div>
-
-    <div id="itemWindow"
-      class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm items-center justify-center z-50"
-    >
-      <div id="addBox" class="bg-white w-[40%] rounded-2xl shadow-2xl px-8 py-3 space-y-5">
-        <div class="flex justify-between border-b py-3">
-          <p class="text-2xl font-[700]">Add New Food Item</p>
-          <button id="closeBtn">
-            <i
-              class="fa-solid fa-xmark text-3xl text-gray-400 hover:text-[#4b5563]"
-            ></i>
+          <button
+            onclick="showSection('analyticsSection')"
+            class="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100"
+          >
+            <i class="fa-solid fa-chart-line"></i>
+            Analytics
           </button>
         </div>
-        <form id="foodForm" class="space-y-2">
-
-
-      <div>
-        <label class="block text-lg font-semibold mb-2">
-          Food Name
-        </label>
-
-        <input id="foodName"
-          type="text"
-          required
-          placeholder="e.g., Spicy Paneer Burger"
-          class="w-full border rounded-xl p-4 text-lg outline-none
-                 focus:ring-2 focus:ring-orange-400"
-        >
       </div>
 
+      <!-- Logout -->
+      <div class="p-4 border-t">
+        <button
+          id="logoutBtn"
+          class="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-xl font-semibold duration-200"
+        >
+          <i class="fa-solid fa-right-from-bracket"></i>
+          Logout
+        </button>
+      </div>
+    </aside>
 
-      <div class="grid grid-cols-2 gap-6">
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 overflow-y-auto">
+      <!-- DASHBOARD SECTION -->
+      <section id="dashboardSection">
+        <!-- NAV -->
+        <nav
+          class="bg-white shadow-md px-6 py-4 flex justify-between sticky top-0 z-50"
+        >
+          <div>
+            <p class="text-3xl font-bold text-gray-800">Dashboard</p>
 
-        <div>
-          <label class="block text-lg font-semibold mb-2">
-            Category
-          </label>
+            <p class="text-gray-500">Manage your restaurant menu</p>
+          </div>
 
-          <select id="foodCategory" required
-            class="w-full border rounded-xl p-4 text-lg outline-none
-                   focus:ring-2 focus:ring-orange-400"
+          <button
+            id="addBtn"
+            class="text-white bg-orange-500 rounded-full px-6 py-3 font-semibold hover:bg-orange-600 duration-200"
           >
+            <i class="fa-solid fa-plus"></i>
+            Add New Item
+          </button>
+        </nav>
+
+        <!-- DATA CARDS -->
+        <div class="grid grid-cols-3 gap-6 p-6">
+          <!-- Total -->
+          <div class="bg-white p-6 rounded-2xl shadow-md flex justify-between">
+            <div>
+              <h2 class="text-gray-500">Total Items</h2>
+
+              <p
+                id="totalItems"
+                class="text-3xl font-bold mt-2 text-orange-500"
+              >
+                0
+              </p>
+            </div>
+
+            <div
+              class="bg-[#fff7ed] w-20 h-20 rounded-2xl flex items-center justify-center"
+            >
+              <i class="fa-solid fa-layer-group text-orange-500 text-3xl"></i>
+            </div>
+          </div>
+
+          <!-- Available -->
+          <div class="bg-white p-6 rounded-2xl shadow-md flex justify-between">
+            <div>
+              <h2 class="text-gray-500">Available</h2>
+
+              <p
+                id="availableItems"
+                class="text-3xl font-bold mt-2 text-green-600"
+              >
+                0
+              </p>
+            </div>
+
+            <div
+              class="bg-green-100 w-20 h-20 rounded-2xl flex items-center justify-center"
+            >
+              <i class="fa-solid fa-circle-check text-green-600 text-3xl"></i>
+            </div>
+          </div>
+
+          <!-- Out Of Stock -->
+          <div class="bg-white p-6 rounded-2xl shadow-md flex justify-between">
+            <div>
+              <h2 class="text-gray-500">Out Of Stock</h2>
+
+              <p
+                id="outStockItems"
+                class="text-3xl font-bold mt-2 text-red-600"
+              >
+                0
+              </p>
+            </div>
+
+            <div
+              class="bg-red-100 w-20 h-20 rounded-2xl flex items-center justify-center"
+            >
+              <i class="fa-solid fa-circle-xmark text-red-600 text-3xl"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEARCH + FILTER -->
+        <div class="flex justify-between px-5 gap-5">
+          <div
+            class="text-lg flex items-center bg-white px-4 py-2 rounded-lg shadow-md w-full focus-within:ring-2 focus-within:ring-orange-400"
+          >
+            <i class="fa-solid fa-magnifying-glass text-gray-500"></i>
+
+            <input
+              id="searchBar"
+              type="search"
+              placeholder="Search food items..."
+              class="ml-3 w-full outline-none"
+            />
+          </div>
+
+          <select
+            id="filterBox"
+            class="rounded-lg p-3 text-lg outline-none focus:ring-2 focus:ring-orange-400"
+          >
+            <option>All Categories</option>
             <option>Main Course</option>
             <option>Starters</option>
             <option>Desserts</option>
@@ -155,84 +213,217 @@
           </select>
         </div>
 
+        <!-- FOOD CARDS -->
+        <div id="cardContainer" class="grid grid-cols-3 gap-6 m-6"></div>
 
-        <div>
-          <label class="block text-lg font-semibold mb-2">
-            Price ($)
-          </label>
-
-          <input id="foodPrice"
-            type="number"
-            required
-            placeholder="0.00"
-            class="w-full border rounded-xl p-4 text-lg outline-none
-                   focus:ring-2 focus:ring-orange-400"
+        <!-- NO ITEMS -->
+        <div id="noItems" class="hidden text-center p-10 space-y-3">
+          <div
+            class="bg-gray-200 w-fit mx-auto text-[#d1d5db] text-[70px] rounded-full px-8 py-4"
           >
+            <i class="fa-solid fa-pizza-slice"></i>
+          </div>
+
+          <div>
+            <p class="text-2xl font-bold">No food items found</p>
+
+            <p class="text-gray-500">
+              Try adding a new item or adjusting your search.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ORDERS -->
+      <section id="ordersSection" class="hidden p-10">
+        <div class="bg-white rounded-2xl shadow-md p-10 text-center">
+          <div class="text-6xl text-gray-300 mb-4">
+            <i class="fa-solid fa-bag-shopping"></i>
+          </div>
+
+          <p class="text-3xl font-bold">No Orders Yet</p>
+
+          <p class="text-gray-500 mt-2">
+            Incoming customer orders will appear here.
+          </p>
+        </div>
+      </section>
+
+      <!-- TABLES -->
+      <section id="tablesSection" class="hidden p-10">
+        <div class="bg-white rounded-2xl shadow-md p-10 text-center">
+          <div class="text-6xl text-gray-300 mb-4">
+            <i class="fa-solid fa-chair"></i>
+          </div>
+
+          <p class="text-3xl font-bold">No Tables Added</p>
+
+          <p class="text-gray-500 mt-2">
+            Restaurant table reservations will appear here.
+          </p>
+        </div>
+      </section>
+
+      <!-- ANALYTICS -->
+      <section id="analyticsSection" class="hidden p-10">
+        <div class="bg-white rounded-2xl shadow-md p-10 text-center">
+          <div class="text-6xl text-gray-300 mb-4">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+
+          <p class="text-3xl font-bold">No Analytics Available</p>
+
+          <p class="text-gray-500 mt-2">
+            Sales and restaurant insights will appear here.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- POPUP -->
+    <div
+      id="itemWindow"
+      class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm items-center justify-center z-50"
+    >
+      <div class="bg-white w-[40%] rounded-2xl shadow-2xl px-8 py-5">
+        <div class="flex justify-between border-b py-3">
+          <p class="text-2xl font-bold">Add New Food Item</p>
+
+          <button id="closeBtn">
+            <i
+              class="fa-solid fa-xmark text-3xl text-gray-400 hover:text-gray-600"
+            ></i>
+          </button>
         </div>
 
-      </div>
+        <!-- YOUR FORM HERE -->
+        <form id="foodForm" class="space-y-4 mt-5">
+          <div>
+            <label class="block text-lg font-semibold mb-2"> Food Name </label>
 
+            <input
+              id="foodName"
+              type="text"
+              required
+              placeholder="e.g., Burger"
+              class="w-full border rounded-xl p-4 outline-none focus:ring-2 focus:ring-orange-400"
+            />
+          </div>
 
-      <div>
-        <label class="block text-lg font-semibold mb-2">
-          Image URL
-        </label>
+          <div class="grid grid-cols-2 gap-5">
+            <div>
+              <label class="block text-lg font-semibold mb-2"> Category </label>
 
-        <input id="foodImg"
-          type="url"
-          required
-          placeholder="https://images.com/..."
-          class="w-full border rounded-xl p-4 text-lg outline-none
-                 focus:ring-2 focus:ring-orange-400"
-        >
-      </div>
+              <select
+                id="foodCategory"
+                required
+                class="w-full border rounded-xl p-4 outline-none focus:ring-2 focus:ring-orange-400"
+              >
+                <option>Main Course</option>
+                <option>Starters</option>
+                <option>Desserts</option>
+                <option>Beverages</option>
+                <option>Fast Food</option>
+              </select>
+            </div>
 
-      <div>
-        <label class="block text-lg font-semibold mb-2">
-          Description
-        </label>
+            <div>
+              <label class="block text-lg font-semibold mb-2"> Price </label>
 
-        <textarea id="foodDesc"
-        required
-          placeholder="Short appetizing description..."
-          class="w-full border rounded-xl p-4 text-lg outline-none
-                 focus:ring-2 focus:ring-orange-400"
-        ></textarea>
-      </div>
+              <input
+                id="foodPrice"
+                type="number"
+                required
+                placeholder="0.00"
+                class="w-full border rounded-xl p-4 outline-none focus:ring-2 focus:ring-orange-400"
+              />
+            </div>
+          </div>
 
-      <div class="flex items-center gap-3">
-        <input id="tick"
-          type="checkbox"
-          checked
-          class="w-5 h-5 accent-orange-500"
-        >
+          <div>
+            <label class="block text-lg font-semibold mb-2"> Image URL </label>
 
-        <label class="text-lg">
-          Currently Available
-        </label>
-      </div>
+            <input
+              id="foodImg"
+              type="url"
+              required
+              placeholder="https://image.com/food.jpg"
+              class="w-full border rounded-xl p-4 outline-none focus:ring-2 focus:ring-orange-400"
+            />
+          </div>
 
+          <div>
+            <label class="block text-lg font-semibold mb-2">
+              Description
+            </label>
 
-      <button id="saveBtn"
-        class="w-full bg-orange-500 hover:bg-orange-600
-               text-white text-xl font-semibold py-4 rounded-xl duration-200"
-      >
-        Save Food Item
-      </button>
+            <textarea
+              id="foodDesc"
+              required
+              placeholder="Food description..."
+              class="w-full border rounded-xl p-4 outline-none focus:ring-2 focus:ring-orange-400"
+            ></textarea>
+          </div>
 
-    </form>
+          <div class="flex items-center gap-3">
+            <input
+              id="tick"
+              type="checkbox"
+              checked
+              class="w-5 h-5 accent-orange-500"
+            />
+
+            <label> Currently Available </label>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-orange-500 hover:bg-orange-600 text-white py-4 rounded-xl font-semibold duration-200"
+          >
+            Save Food Item
+          </button>
+        </form>
       </div>
     </div>
-
-    <!-- no items -->
-     <div id="noItems" class="hidden text-center p-10 space-y-3">
-      <div class="bg-gray-200 w-full text-[#d1d5db] text-[70px] rounded-full p-4"><i class="fa-solid fa-pizza-slice"></i></div>
-      <div>
-        <p class="text-2xl font-[700]">No food items found</p>
-        <p>Try adding a new item or adjusting your search.</p>
-      </div>
-     </div>
   </body>
-<script src="script.js"></script>
-  
+
+  <script>
+    // show restaurant profile
+    const user = JSON.parse(localStorage.getItem("smartBitesUser"));
+
+    if (user) {
+      document.getElementById("restaurantName").textContent =
+        user.restaurantName;
+
+      if (user.logo) {
+        document.getElementById("restaurantLogo").src = user.logo;
+      }
+    }
+
+    // section switch
+    function showSection(sectionId) {
+      const sections = [
+        "dashboardSection",
+        "ordersSection",
+        "tablesSection",
+        "analyticsSection",
+      ];
+
+      sections.forEach((id) => {
+        document.getElementById(id).classList.add("hidden");
+      });
+
+      document.getElementById(sectionId).classList.remove("hidden");
+    }
+
+    // logout
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("smartBitesUser");
+
+      window.location.href = "login.html";
+    });
+  </script>
+
+  <script src="/js/script.js"></script>
 </html>
